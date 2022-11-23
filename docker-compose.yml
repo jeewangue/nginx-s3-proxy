@@ -3,5 +3,7 @@ services:
   nginx:
     container_name: nginx
     build: .
+    env_file:
+      - .env
     ports:
       - "8040:80"
