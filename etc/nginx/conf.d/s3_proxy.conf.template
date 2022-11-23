@@ -3,17 +3,17 @@ log_format s3proxy '[$time_local] $host "$upstream_http_x_request_id" $status "$
 '$remote_addr $cookie__session_id "$http_user_agent" "$http_referer" $ssl_protocol/$ssl_cipher';
 
 server {
+    listen 80 default_server;
+    server_name _;
+
     include /etc/nginx/mime.types;
     default_type application/octet-stream;
 
     sendfile on;
+    tcp_nopush on;
     keepalive_timeout 65;
 
     autoindex off;
-
-    listen 80 default_server;
-    server_name _;
-
 
     access_log /dev/stdout s3proxy;
     error_log stderr;
@@ -26,7 +26,7 @@ server {
 
     location / {
         resolver 1.1.1.1 ipv6=off;
-        proxy_pass https://s3.amazonaws.com$uri$is_args$args;
+        proxy_pass https://${S3_BUCKET}.s3.amazonaws.com$uri$is_args$args;
 
         proxy_buffering off;
         proxy_buffer_size 16k;
