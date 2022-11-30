@@ -42,10 +42,10 @@ jobs:
               TAGS+=("${image}:latest")
             fi
           done
-          echo ::set-output name=version::${VERSION}
-          echo ::set-output name=tags::$(IFS=,; echo "${TAGS[*]}")
-          echo ::set-output name=commit_hash::${GITHUB_SHA::7}
-          echo ::set-output name=build_date::$(git show -s --format=%cI)
+          echo "version=${VERSION}"                     >> $GITHUB_OUTPUT
+          echo "tags=$(IFS=,; echo "${TAGS[*]}")"       >> $GITHUB_OUTPUT
+          echo "commit_hash=${GITHUB_SHA::7}"           >> $GITHUB_OUTPUT
+          echo "build_date=$(git show -s --format=%cI)" >> $GITHUB_OUTPUT
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
