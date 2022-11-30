@@ -5,5 +5,3 @@ FROM nginx:1.23-alpine
 COPY ./etc/nginx /etc/nginx/
 COPY ./docker-entrypoint.d /docker-entrypoint.d/
 
-EXPOSE 80
-
