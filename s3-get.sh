@@ -33,7 +33,7 @@ AWS_REGION="$2"
 #AWS_SERVICE_ENDPOINT_URL="${AWS_SERVICE}.${AWS_REGION}.amazonaws.com"
 AWS_S3_BUCKET_NAME="$1"
 AWS_S3_PATH="$(echo $3 | sed 's;^\([^/]\);/\1;')"
-AWS_SERVICE_ENDPOINT_URL="${AWS_S3_BUCKET_NAME}.s3.amazonaws.com"
+AWS_SERVICE_ENDPOINT_URL="${AWS_S3_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com"
 
 
 
@@ -92,8 +92,8 @@ SignedHeaders=${HTTP_REQUEST_SIGNED_HEADERS}, Signature=${SIGNATURE}"
 
 [ -d $4 ] && OUT_FILE="$4/$(basename $AWS_S3_PATH)" || OUT_FILE=$4
 
-REQ_URL="https://${AWS_SERVICE_ENDPOINT_URL}${HTTP_CANONICAL_REQUEST_URI}"
-# REQ_URL="http://localhost:8040${HTTP_CANONICAL_REQUEST_URI}"
+# REQ_URL="https://${AWS_SERVICE_ENDPOINT_URL}${HTTP_CANONICAL_REQUEST_URI}"
+REQ_URL="http://localhost:8040${HTTP_CANONICAL_REQUEST_URI}"
 echo "Downloading ${REQ_URL} to ${OUT_FILE}"
 
 curl -S -vvv "${REQ_URL}" \

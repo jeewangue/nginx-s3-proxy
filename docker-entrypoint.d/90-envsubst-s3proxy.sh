@@ -2,4 +2,6 @@
 set -eu
 
 echo "S3 bucket : ${S3_BUCKET}" 
-envsubst '${S3_BUCKET}' < /etc/nginx/conf.d/s3_proxy.conf.template > /etc/nginx/conf.d/s3_proxy.conf
+echo "S3 region : ${S3_REGION}" 
+
+envsubst '${S3_BUCKET},${S3_REGION}' < /etc/nginx/conf.d/s3_proxy.conf.template > /etc/nginx/conf.d/s3_proxy.conf
