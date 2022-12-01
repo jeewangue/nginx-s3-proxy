@@ -17,7 +17,7 @@ server {
 
     autoindex off;
 
-    location = /ping {
+    location = /healthz {
         default_type text/plain;
         sendfile off;
         return 200;

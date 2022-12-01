@@ -3,13 +3,18 @@
 deploy
 
 ```bash
+cp .env.example .env
+# edit `.env` file to set up environments.
+
 docker-compose up -d
 ```
 
-test
+test with custom script
 
 ```bash
-./s3-get.sh <bucket> <region> <object-path> <output-path>
+export AWS_ACCESS_KEY_ID="<your_access_key_id>"
+export AWS_SECRET_ACCESS_KEY="<your_secret_access_key>"
+./s3-get.sh <bucket> <region> <object-path> <outfile>
 ```
 
 test with `aws-cli`
@@ -36,7 +41,7 @@ aws s3 presign <bucket>/<object-path> --region <region> | perl -pe 's,https://.*
 #           X-Amz-SignedHeaders=host&
 #           X-Amz-Signature=xxxxxxxx
 
-# request with curl
+# request modified presigned url with curl
 curl -vv $(aws s3 presign <bucket>/<object-path> --region <region> | perl -pe 's,https://.*?amazonaws\.com,http://localhost:8040,g') -o <outfile>
 
 ```

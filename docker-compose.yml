@@ -2,7 +2,9 @@ version: "3.8"
 services:
   nginx:
     container_name: nginx
-    build: .
+    image: jeewangue/nginx-s3-proxy
+    build:
+      context: .
     env_file:
       - .env
     ports:
